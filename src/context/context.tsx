@@ -21,8 +21,27 @@ type Props = {
 type ContextType = {
   state: InitialStateType;
   dispatch?: React.Dispatch<Actions>;
+  setData?: () => void;
   fetchData?: () => void;
 };
+
+//get localstorage data
+function getUserFromLocalStorage(key: string) {
+  const data = localStorage.getItem(key);
+
+  return data ? JSON.parse(data) : { username: null, token: null };
+}
+
+//  const userLogin = (user) => {
+//    setUser(user);
+//    localStorage.setItem("user", JSON.stringify(user));
+//  };
+
+//  const userLogout = () => {
+//    setUser({ username: null, token: null });
+//    localStorage.removeItem("user");
+//  };
+
 const initialState = {
   data: [],
 };
@@ -38,8 +57,11 @@ export const DataProvider: React.FC<Props> = ({ children }) => {
       })
       .catch((error) => console.error(error));
   };
+  const setData = () => {
+    localStorage.setItem("user", JSON.stringify(state.data));
+  };
   return (
-    <DataContext.Provider value={{ state, fetchData }}>
+    <DataContext.Provider value={{ state, fetchData, setData }}>
       {children}
     </DataContext.Provider>
   );

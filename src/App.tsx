@@ -1,14 +1,16 @@
 import useDataContext from "./context/context";
 import React from "react";
+import styled from "styled-components";
 
 const App = () => {
   const {
     state: { data },
     fetchData,
+    setData,
   } = useDataContext()!;
 
   return (
-    <div>
+    <AppWrapper>
       {data.length > 0 ? (
         <div>
           {data.map(({ id, address, amount, name, price }) => {
@@ -26,7 +28,13 @@ const App = () => {
         <h2>no data</h2>
       )}
       <button onClick={fetchData}>fetch data</button>
-    </div>
+      <button onClick={setData}>set user data</button>
+    </AppWrapper>
   );
 };
 export default App;
+
+const AppWrapper = styled.main`
+  height: 100vh;
+  width: 100vw;
+`;
