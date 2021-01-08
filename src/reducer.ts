@@ -6,7 +6,6 @@ export type Actions = { type: GET_DATA; payload: any };
 const reducer = (state: InitialStateType, action: Actions) => {
   switch (action.type) {
     case GET_DATA:
-      console.log(action.payload);
       return { ...state, data: action.payload };
   }
 };
