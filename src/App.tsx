@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from "react";
-import useDataContext from "./context";
-interface Props {
-  name: string;
-  level: number;
-}
+import useDataContext from "./context/context";
+import React from "react";
 
 const App = () => {
-  const { count, addCount } = useDataContext()!;
-
+  const { state, fetchData } = useDataContext()!;
+  console.log(state);
   return (
     <div>
-      {count}
-      <button onClick={addCount}>+</button>
+      <button onClick={fetchData}>fetch data</button>
     </div>
   );
 };
