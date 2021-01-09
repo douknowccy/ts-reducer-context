@@ -1,7 +1,10 @@
 import useDataContext from "./context/context";
 import React from "react";
 import styled from "styled-components";
-
+import LayoutPage from "./components/layout";
+import Home from "./pages/Home";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import sidebarList from "./constant/sidebarList";
 const App = () => {
   const {
     state: { data },
@@ -11,24 +14,19 @@ const App = () => {
 
   return (
     <AppWrapper>
-      {data.length > 0 ? (
-        <div>
-          {data.map(({ id, address, amount, name, price }) => {
-            return (
-              <article key={id}>
-                <h1>{name}</h1>
-                <p>{amount}</p>
-                <p>${price}</p>
-                <span>{address}</span>
-              </article>
-            );
-          })}
-        </div>
-      ) : (
-        <h2>no data</h2>
-      )}
-      <button onClick={fetchData}>fetch data</button>
-      <button onClick={setData}>set user data</button>
+      <Router>
+        <Switch>
+          <LayoutPage>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            {sidebarList.map((item) => {
+              const { component, path } = item;
+              return <Route path={path}>{component}</Route>;
+            })}
+          </LayoutPage>
+        </Switch>
+      </Router>
     </AppWrapper>
   );
 };
